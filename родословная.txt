@@ -1,0 +1,52 @@
+// ConsoleApplication3.cpp: определяет точку входа для консольного приложения.
+//
+
+#include "stdafx.h"
+#include <iostream>
+#include "locale.h"
+#include <windows.h>
+#include "string"
+
+using namespace std;
+
+int Count = 0;
+
+typedef struct FamilyTree{
+	FamilyTree *f;
+	FamilyTree *m;
+	char* fio = new char[30];
+} FamilyT;
+
+FamilyTree *MakeTree(int N, char oldfio[30], char per){
+	FamilyTree *p;
+
+	p = new FamilyTree;
+	
+	if (N >= 1){
+		Count++;
+		switch (per)
+		{
+		case 'f': cout << "Введите ФИО отца '" << oldfio << "' :" << endl; cin.getline(p->fio,30); oldfio = p->fio; break;
+		case 'm': cout << "Введите ФИО матери " << oldfio << " :" << endl; cin.getline(p->fio, 30); oldfio = p->fio; break;
+		default: cout << "Введите ваше ФИО: " << endl; cin.getline(p->fio, 30); oldfio = p->fio; break;
+		}
+		p->f = MakeTree(N - 1,oldfio, 'f');
+		p->m = MakeTree(N - 1, oldfio, 'm');
+	}
+	return p;
+}
+
+
+int main(){
+	setlocale(LC_ALL, "Russian");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	short ex=1;
+	FamilyTree *q;
+	char zapros[4];
+
+	q = MakeTree(4,"", 'i');
+	cout << "Элементов в родословной: " << Count << endl;
+	
+	system("pause");
+}

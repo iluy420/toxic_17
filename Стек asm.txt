@@ -1,0 +1,33 @@
+#include "stdafx.h"
+//#include <iostream>
+#include <conio.h>
+#include "locale.h"
+#include <windows.h>
+#include "string"
+
+using namespace std;
+
+void main()
+{
+	setlocale(LC_ALL, "Russian");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	int a, b, sum;
+	printf("¬ведите a ");
+	scanf_s("%i", &a);
+	/*printf("¬ведите b ");
+	scanf_s("%i", &b);*/
+	_asm{
+			mov eax, a
+			mov cx, 4
+		m1:
+			pushad eax;
+			add ax, 2;
+		loop m1
+			popad ebx;
+			mov b, ebx
+	}
+	printf("\n a= %d, b= %d", a,b);
+	_getch();
+
+}
